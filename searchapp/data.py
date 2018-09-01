@@ -36,6 +36,7 @@ def all_products():
     """
     Returns a list of ~20,000 ProductData objects, loaded from
     searchapp/products.json
+    Convert the product json objects to python objects and attach a unique id to each product.
     """
 
     global _all_products
@@ -47,8 +48,9 @@ def all_products():
         dir_path = os.path.dirname(os.path.realpath(__file__))
         products_path = os.path.join(dir_path, 'products.json')
         with open(products_path) as product_file:
-            for idx, product in enumerate(json.load(product_file)):
-                id_ = idx + 1  # ES indexes must be positive integers, so add 1
+            # json.load(product_file) convert json objects to python object
+            for id_, product in enumerate(json.load(product_file), 1):
+                # id_ = idx + 1  # ES indexes must be positive integers, so add 1
                 product_data = ProductData(id_, **product)
                 _all_products.append(product_data)
 
